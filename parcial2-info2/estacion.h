@@ -6,6 +6,7 @@
 using namespace std;
 class Linea; // Forward declaration
 
+
 class Estacion {
 private:
     string nombre;

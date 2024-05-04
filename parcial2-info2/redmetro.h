@@ -6,6 +6,7 @@
 #include "linea.h"
 
 
+
 using namespace std;
 class RedMetro {
 private:

@@ -1,6 +1,8 @@
 #include "redmetro.h"
 
 
+
+
 using namespace std;
 
 RedMetro::RedMetro(const string& nombre) : nombre(nombre) {}

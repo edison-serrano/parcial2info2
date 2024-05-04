@@ -2,6 +2,7 @@
 
 
 
+
 using namespace std;
 
 Estacion::Estacion(const string& nombre, Linea* linea, int tiempoAnterior, int tiempoSiguiente, bool esTransferencia)

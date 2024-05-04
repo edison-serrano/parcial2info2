@@ -1,5 +1,7 @@
 #include "linea.h"
 
+
+
 using namespace std;
 
 Linea::Linea(const string& nombre, RedMetro* redMetro) : nombre(nombre), redMetro(redMetro) {}
