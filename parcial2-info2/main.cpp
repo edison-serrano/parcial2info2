@@ -1,9 +1,7 @@
 #include <iostream>
-#include "redmetro.h"
-#include "linea.h"
-#include "estacion.h"
-
-
+#include "RedMetro.h"
+#include "Linea.h"
+#include "Estacion.h"
 
 using namespace std;
 
@@ -16,7 +14,7 @@ void menuPrincipal() {
     cout << "Seleccione una opción: ";
 }
 
-void menuRedMetro() {
+void menuRedMetro(RedMetro& redMetro) {
     cout << "\n=== Menú Red Metro ===" << endl;
     cout << "1. Ver Red Metro" << endl;
     cout << "2. Crear Red Metro" << endl;
@@ -48,6 +46,7 @@ void menuEstacion() {
 int main() {
     int opcion;
     bool salir = false;
+    RedMetro redMetro("Nombre Predeterminado");
 
     while (!salir) {
         menuPrincipal();
@@ -56,16 +55,22 @@ int main() {
         switch (opcion) {
         case 1:
             while (true) {
-                menuRedMetro();
+                menuRedMetro(redMetro);
                 cin >> opcion;
 
                 switch (opcion) {
                 case 1:
                     // Implementar ver red metro
+                    redMetro.verRedesDisponibles();
                     break;
-                case 2:
-                    // Implementar crear red metro
+                case 2: {
+                    string nombreRed;
+                    cout << "Ingrese el nombre de la nueva red de metro: ";
+                    cin >> nombreRed;
+                    redMetro.crearRedMetro(nombreRed);
+                    cout << "Red de metro creada exitosamente." << endl;
                     break;
+                }
                 case 3:
                     // Implementar eliminar red metro
                     break;
@@ -82,64 +87,10 @@ int main() {
             }
             break;
         case 2:
-            while (true) {
-                menuLinea();
-                cin >> opcion;
-
-                switch (opcion) {
-                case 1:
-                    // Implementar ver lineas disponibles
-                    break;
-                case 2:
-                    // Implementar crear linea
-                    break;
-                case 3:
-                    // Implementar editar linea
-                    break;
-                case 4:
-                    // Implementar eliminar linea
-                    break;
-                case 5:
-                    // Volver al menú principal
-                    break;
-                default:
-                    cout << "Opción inválida. Intente de nuevo." << endl;
-                }
-
-                if (opcion == 5) {
-                    break;
-                }
-            }
+            // Implementar menú de línea
             break;
         case 3:
-            while (true) {
-                menuEstacion();
-                cin >> opcion;
-
-                switch (opcion) {
-                case 1:
-                    // Implementar ver estaciones disponibles
-                    break;
-                case 2:
-                    // Implementar crear estacion
-                    break;
-                case 3:
-                    // Implementar editar estacion
-                    break;
-                case 4:
-                    // Implementar eliminar estacion
-                    break;
-                case 5:
-                    // Volver al menú principal
-                    break;
-                default:
-                    cout << "Opción inválida. Intente de nuevo." << endl;
-                }
-
-                if (opcion == 5) {
-                    break;
-                }
-            }
+            // Implementar menú de estación
             break;
         case 4:
             salir = true;
