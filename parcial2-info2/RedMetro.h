@@ -23,6 +23,7 @@ public:
 
     void crearRedMetro(const string& nombreRed);
     void verRedesDisponibles(); // Función para mostrar las redes disponibles
+    void eliminarRedMetro(const string& nombreRed);
 };
 
 #endif // REDMETRO_H

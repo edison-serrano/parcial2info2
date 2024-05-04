@@ -71,9 +71,14 @@ int main() {
                     cout << "Red de metro creada exitosamente." << endl;
                     break;
                 }
-                case 3:
-                    // Implementar eliminar red metro
+                case 3: {
+                    string nombreRed;
+                    cout << "Ingrese el nombre de la red de metro a eliminar: ";
+                    cin >> nombreRed;
+                    redMetro.eliminarRedMetro(nombreRed);
+                    cout << "Red de metro eliminada exitosamente." << endl;
                     break;
+                }
                 case 4:
                     // Volver al menú principal
                     break;
