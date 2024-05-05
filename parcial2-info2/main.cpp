@@ -55,71 +55,85 @@ void menuRedMetro(RedMetro& redMetro) {
 }
 
 void menuLinea(RedMetro& redMetro) {
-    Linea linea("Linea 1", 5);
-    Estacion* nuevaEstacion = nullptr; // Declarar la variable fuera del bucle
-
     int opcion;
-    while (true) {
+    bool salir = false;
+
+    while (!salir) {
         cout << "\n=== Menú Línea ===" << endl;
-        cout << "1. Agregar Estación a Línea" << endl;
-        cout << "2. Eliminar Estación de Línea" << endl;
-        cout << "3. Ver Número de Estaciones en Línea" << endl;
-        cout << "4. Mostrar Línea" << endl;
-        cout << "5. Volver al Menú Principal" << endl;
+        cout << "1. Crear Línea" << endl;
+        cout << "2. Agregar Estación a Línea" << endl;
+        cout << "3. Eliminar Estación de Línea" << endl;
+        cout << "4. Ver Número de Estaciones en Línea" << endl;
+        cout << "5. Mostrar Línea" << endl;
+        cout << "6. Volver al Menú Principal" << endl;
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
         switch (opcion) {
         case 1: {
-            string nombreEstacion;
+            string nombreLinea;
+            cout << "Ingrese el nombre de la nueva línea: ";
+            cin >> nombreLinea;
+            redMetro.crearLinea(nombreLinea); // Ajuste aquí para pasar solo el nombre de la línea
+            cout << "Línea creada exitosamente." << endl;
+            break;
+        }
+        case 2: {
+            string nombreLinea, nombreEstacion;
             int posicion;
+            cout << "Ingrese el nombre de la línea a la que desea agregar la estación: ";
+            cin >> nombreLinea;
             cout << "Ingrese el nombre de la estación a agregar: ";
             cin >> nombreEstacion;
             cout << "Ingrese la posición donde desea agregar la estación: ";
             cin >> posicion;
-            nuevaEstacion = new Estacion(nombreEstacion);
-            linea.agregarEstacion(nuevaEstacion, posicion);
-            cout << "Estación creada correctamente en la línea." << endl;
-            break;
-        }
-        case 2: {
-            if (linea.getNumeroEstaciones() == 0) {
-                cout << "No hay estaciones en la línea para eliminar." << endl;
+
+            // Crear una nueva instancia de Estacion
+            Estacion* nuevaEstacion = new Estacion(nombreEstacion);
+
+            // Verificar si la estación se creó correctamente
+            if (nuevaEstacion != nullptr) {
+                // Llamar a la función para agregar la estación a la línea
+                redMetro.agregarEstacionALinea(nombreLinea, nuevaEstacion, posicion);
             } else {
-                string nombreEstacion;
-                cout << "Ingrese el nombre de la estación que desea eliminar: ";
-                cin >> nombreEstacion;
-                Estacion* estacion = nullptr;
-                // Obtener la estación por su nombre
-                // Aquí necesitas implementar un método en la clase Linea que busque y devuelva una estación por su nombre
-                if ((estacion = linea.obtenerEstacion(nombreEstacion)) != nullptr) {
-                    linea.eliminarEstacion(estacion);
-                } else {
-                    cout << "La estación '" << nombreEstacion << "' no se encontró en la línea." << endl;
-                }
+                cout << "Error al crear la estación." << endl;
+                // Si hubo un error al crear la estación, asegúrate de liberar la memoria
+                delete nuevaEstacion;
             }
             break;
         }
+
         case 3: {
-            cout << "Número de estaciones: " << linea.getNumeroEstaciones() << endl;
+            string nombreLinea, nombreEstacion;
+            cout << "Ingrese el nombre de la línea de la que desea eliminar la estación: ";
+            cin >> nombreLinea;
+            cout << "Ingrese el nombre de la estación a eliminar: ";
+            cin >> nombreEstacion;
+            redMetro.eliminarEstacionDeLinea(nombreLinea, nombreEstacion);
             break;
         }
         case 4: {
-            cout << linea.toString() << endl;
+            string nombreLinea;
+            cout << "Ingrese el nombre de la línea: ";
+            cin >> nombreLinea;
+            redMetro.verNumeroEstacionesEnLinea(nombreLinea);
             break;
         }
-        case 5:
-            cout << "Saliendo del programa." << endl;
+        case 5: {
+            string nombreLinea;
+            cout << "Ingrese el nombre de la línea que desea ver: ";
+            cin >> nombreLinea;
+            redMetro.mostrarLinea(nombreLinea);
+            break;
+        }
+        case 6:
+            cout << "Saliendo del Menú Línea." << endl;
+            salir = true;
             break;
         default:
             cout << "Opción inválida. Intente de nuevo." << endl;
             break;
         }
-    }
-
-    // Liberar la memoria asignada dinámicamente al salir del bucle
-    if (nuevaEstacion) {
-        delete nuevaEstacion;
     }
 }
 
