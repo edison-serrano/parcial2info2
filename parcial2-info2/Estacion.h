@@ -3,22 +3,15 @@
 
 #include <string>
 
-using namespace std;
-class Linea; // Forward declaration
-
-
+// Clase Estacion
 class Estacion {
-private:
-    string nombre;
-    Linea* linea;
-    int tiempoAnterior;
-    int tiempoSiguiente;
-    bool esTransferencia;
-
 public:
-    Estacion(const string& nombre, Linea* linea, int tiempoAnterior, int tiempoSiguiente, bool esTransferencia);
-    int getTiempoLlegada(Estacion* destino) const;
-    string toString() const;
+    std::string nombre;
+    // Otros atributos de la estación, como coordenadas, por ejemplo
+
+    Estacion(std::string nombre);
+    // Otros métodos de la estación
 };
 
-#endif // ESTACION_H
+#endif
+

@@ -2,28 +2,28 @@
 #define LINEA_H
 
 #include <string>
-#include <vector>
 #include "Estacion.h"
 
-
-
-using namespace std;
-class RedMetro; // Forward declaration
-
+// Clase Linea
 class Linea {
 private:
-    string nombre;
-    RedMetro* redMetro;
-    vector<Estacion*> estaciones;
+    std::string nombre;
+    Estacion** estaciones;
+    int capacidad;
+    int tamano;
 
 public:
-    Linea(const string& nombre, RedMetro* redMetro);
+    Linea(std::string nombre, int capacidad);
     ~Linea();
 
-    void agregarEstacion(Estacion* estacion);
+
+    Estacion* obtenerEstacion(const std::string& nombreEstacion);
+    void agregarEstacion(Estacion* estacion, int posicion);
     void eliminarEstacion(Estacion* estacion);
-    int getNumeroEstaciones() const;
-    string toString() const;
+    int getNumeroEstaciones();
+    std::string toString();
 };
 
-#endif // LINEA_H
+#endif
+
+

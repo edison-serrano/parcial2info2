@@ -1,4 +1,5 @@
 #include "RedMetro.h"
+#include "Linea.h""
 #include <iostream>
 
 
