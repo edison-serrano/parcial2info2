@@ -29,7 +29,7 @@ Linea::~Linea() {
 // Método para agregar una estación a la línea
 void Linea::agregarEstacion(Estacion* estacion, int posicion) {
     if (posicion < 0 || posicion > tamano || tamano == capacidadMaxima) {
-        cout << "Error: No se puede agregar la estación en la posición especificada o la línea está llena." << endl;
+        cout << "Error: No se puede agregar la estacion en la posicion especificada o la linea esta llena." << endl;
         return;
     }
 
@@ -63,9 +63,9 @@ void Linea::eliminarEstacion(Estacion* estacion) {
             }
         }
         tamano = j; // Actualizar el tamaño del arreglo
-        cout << "Estación eliminada correctamente de la línea." << endl;
+        cout << "Estacion eliminada correctamente de la linea." << endl;
     } else {
-        cout << "Error: La estación no se encontró en la línea." << endl;
+        cout << "Error: La estacion no se encontro en la linea." << endl;
     }
 }
 
@@ -86,9 +86,9 @@ int Linea::getNumeroEstaciones() {
 
 // Método para obtener una representación de cadena de la línea
 string Linea::toString() const {
-    string infoLinea = "Nombre de la línea: " + nombre + "\n";
-    infoLinea += "Capacidad máxima: " + to_string(capacidadMaxima) + "\n";
-    infoLinea += "Estaciones en la línea:\n";
+    string infoLinea = "Nombre de la linea: " + nombre + "\n";
+    infoLinea += "Capacidad maxima: " + to_string(capacidadMaxima) + "\n";
+    infoLinea += "Estaciones en la linea:\n";
     for (int i = 0; i < tamano; ++i) {
         infoLinea += " - " + estaciones[i]->getNombre() + "\n";
     }
