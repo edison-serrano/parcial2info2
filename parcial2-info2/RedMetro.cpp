@@ -1,15 +1,30 @@
 #include "RedMetro.h"
-#include "Linea.h""
+#include "Linea.h"
 #include <iostream>
 
 
 
 using namespace std;
-RedMetro::RedMetro(const string& nombre) : redes(nullptr), numRedes(0), capacidadRedes(0) {}
+
+
+
+RedMetro::RedMetro(const string& nombre) : redes(nullptr), numRedes(0), capacidadRedes(0), lineas(nullptr), numLineas(0), capacidadLineas(0) {
+    // Inicializar el arreglo de líneas con la capacidad adecuada
+    lineas = new Linea[capacidadLineas];
+    // Llenar el arreglo de líneas con objetos Linea inicializados
+    for (int i = 0; i < capacidadLineas; ++i) {
+        // Inicializar cada objeto Linea con el constructor proporcionado
+        lineas[i] = Linea("Nombre de la línea", 10); // Reemplaza "Nombre de la línea" con el nombre deseado y 10 con la capacidad máxima deseada
+    }
+}
+
 
 RedMetro::~RedMetro() {
     delete[] redes;
 }
+
+
+
 
 void RedMetro::crearRedMetro(const string& nombreRed) {
     if (numRedes == capacidadRedes) {
@@ -39,6 +54,8 @@ void RedMetro::verRedesDisponibles() {
         }
     }
 }
+
+
 void RedMetro::eliminarRedMetro(const string& nombreRed) {
     // Buscar la red con el nombre dado
     int indice = -1;
@@ -71,3 +88,98 @@ void RedMetro::eliminarRedMetro(const string& nombreRed) {
     }
 }
 
+// Implementación del método crearLinea
+void RedMetro::crearLinea(const string& nombreLinea) {
+    if (numLineas == capacidadLineas) {
+        // Si el arreglo está lleno, ampliamos su capacidad
+        capacidadLineas = (capacidadLineas == 0) ? 1 : capacidadLineas * 2;
+        Linea* nuevoArreglo = new Linea[capacidadLineas];
+        // Copiamos los datos del arreglo anterior al nuevo
+        for (int i = 0; i < numLineas; ++i) {
+            nuevoArreglo[i] = lineas[i];
+        }
+        delete[] lineas;
+        lineas = nuevoArreglo;
+    }
+    // Creamos la nueva línea
+    lineas[numLineas] = Linea(nombreLinea, 10); // Reemplaza 10 con la capacidad máxima deseada
+    numLineas++;
+    cout << "Se ha creado la línea '" << nombreLinea << "'." << endl;
+}
+
+
+// Obtener una línea por su nombre
+Linea* RedMetro::obtenerLineaPorNombre(const string& nombre) const {
+    for (int i = 0; i < numLineas; ++i) {
+        if (lineas[i].getNombre() == nombre) {
+            return &lineas[i];
+        }
+    }
+    return nullptr; // Si no se encuentra la línea
+}
+
+void RedMetro::agregarEstacionALinea(const string& nombreLinea, Estacion* estacion, int posicion) {
+    Linea* linea = obtenerLineaPorNombre(nombreLinea);
+    if (linea) {
+        linea->agregarEstacion(estacion, posicion);
+    } else {
+        cout << "La línea especificada no existe." << endl;
+    }
+}
+
+
+Estacion* RedMetro::obtenerEstacionPorNombre(const string& nombreEstacion) const {
+    // Iterar sobre todas las líneas y buscar la estación en cada una
+    for (int i = 0; i < numLineas; ++i) {
+        // Obtener la línea actual
+        Linea lineaActual = lineas[i];
+        // Obtener la estación actual de esta línea
+        Estacion* estacion = lineaActual.obtenerEstacion(nombreEstacion);
+        // Si se encuentra la estación, devolverla
+        if (estacion != nullptr) {
+            return estacion;
+        }
+    }
+    // Si no se encuentra la estación en ninguna línea, devolver nullptr
+    return nullptr;
+}
+
+
+void RedMetro::eliminarEstacionDeLinea(const std::string& nombreLinea, const string& nombreEstacion) {
+    Linea* linea = obtenerLineaPorNombre(nombreLinea); // Obtener la línea por su nombre
+    if (linea) {
+        Estacion* estacion = linea->obtenerEstacion(nombreEstacion); // Obtener la estación por su nombre
+        if (estacion) {
+            linea->eliminarEstacion(estacion); // Eliminar la estación de la línea
+            cout << "Estación '" << nombreEstacion << "' eliminada de la línea '" << nombreLinea << "'." << endl;
+        } else {
+            cout << "La estación '" << nombreEstacion << "' no se encontró en la línea '" << nombreLinea << "'." << endl;
+        }
+    } else {
+        cout << "La línea '" << nombreLinea << "' no existe." << endl;
+    }
+}
+
+void RedMetro::verNumeroEstacionesEnLinea(const string& nombreLinea) const {
+    Linea* linea = obtenerLineaPorNombre(nombreLinea);
+    if (linea) {
+        cout << "Número de estaciones en la línea '" << nombreLinea << "': " << linea->getNumeroEstaciones() << endl;
+    } else {
+        cout << "La línea '" << nombreLinea << "' no existe." << endl;
+    }
+}
+
+
+void RedMetro::mostrarLinea(const string& nombreLinea) const {
+    // Buscar la línea por su nombre
+    Linea* linea = obtenerLineaPorNombre(nombreLinea);
+
+    // Verificar si la línea existe
+    if (linea) {
+        // Mostrar la información de la línea
+        cout << "Información de la línea '" << nombreLinea << "':" << endl;
+        cout << linea->toString() << endl;
+    } else {
+        cout << "La línea '" << nombreLinea << "' no existe." << endl;
+    }
+}

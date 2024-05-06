@@ -4,24 +4,33 @@
 #include <string>
 #include "Estacion.h"
 
+using namespace std;
+
 // Clase Linea
 class Linea {
 private:
-    std::string nombre;
+    string nombre;
     Estacion** estaciones;
     int capacidad;
+    int capacidadMaxima;
+    int numeroEstaciones;
     int tamano;
 
 public:
-    Linea(std::string nombre, int capacidad);
+    Linea();
+    Linea(const string& nombre, int capacidadMaxima);
+    //Linea(std::string nombre, int capacidadMaxima);
+    Linea(string nombre);
+
     ~Linea();
 
 
-    Estacion* obtenerEstacion(const std::string& nombreEstacion);
+    Estacion* obtenerEstacion(const string& nombreEstacion);
     void agregarEstacion(Estacion* estacion, int posicion);
     void eliminarEstacion(Estacion* estacion);
     int getNumeroEstaciones();
-    std::string toString();
+    string toString() const;
+    string getNombre() const;
 };
 
 #endif

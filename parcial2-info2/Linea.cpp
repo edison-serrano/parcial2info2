@@ -4,30 +4,45 @@
 using namespace std;
 
 
-// Implementación del constructor
-Linea::Linea(std::string nombre, int capacidad) : nombre(nombre), capacidad(capacidad), tamano(0) {
-    estaciones = new Estacion*[capacidad];
+// Constructor predeterminado
+Linea::Linea() : nombre("Nombre por defecto"), capacidadMaxima(10), estaciones(nullptr), capacidad(0), tamano(0) {
+    // Inicializar el arreglo de estaciones con capacidad inicial
+    estaciones = new Estacion*[capacidadMaxima];
 }
 
-// Implementación del destructor
+// Constructor con parámetros
+Linea::Linea(const string& nombre, int capacidadMaxima) : nombre(nombre), capacidadMaxima(capacidadMaxima), estaciones(nullptr), capacidad(0), tamano(0) {
+    // Inicializar el arreglo de estaciones con capacidad inicial
+    estaciones = new Estacion*[capacidadMaxima];
+}
+
+// Destructor
 Linea::~Linea() {
+    // Liberar la memoria de cada estación
+    for (int i = 0; i < tamano; ++i) {
+        delete estaciones[i];
+    }
+    // Liberar la memoria del arreglo de punteros a estaciones
     delete[] estaciones;
 }
 
-// Implementación del método agregarEstacion
+// Método para agregar una estación a la línea
 void Linea::agregarEstacion(Estacion* estacion, int posicion) {
-    if (posicion < 0 || posicion > tamano || tamano == capacidad) {
-        std::cout << "Error: No se puede agregar la estación en la posición especificada." << std::endl;
+    if (posicion < 0 || posicion > tamano || tamano == capacidadMaxima) {
+        cout << "Error: No se puede agregar la estación en la posición especificada o la línea está llena." << endl;
         return;
     }
 
+    // Hacer espacio para la nueva estación
     for (int i = tamano; i > posicion; --i) {
         estaciones[i] = estaciones[i - 1];
     }
+    // Agregar la nueva estación
     estaciones[posicion] = estacion;
     tamano++;
 }
 
+// Método para eliminar una estación de la línea
 void Linea::eliminarEstacion(Estacion* estacion) {
     bool encontrada = false; // Variable para indicar si se encontró la estación
     for (int i = 0; i < tamano; ++i) {
@@ -45,8 +60,6 @@ void Linea::eliminarEstacion(Estacion* estacion) {
         for (int i = 0; i < tamano; ++i) {
             if (estaciones[i] != nullptr) {
                 estaciones[j++] = estaciones[i];
-            } else {
-                delete estaciones[i]; // Liberar la memoria de la estación nullptr
             }
         }
         tamano = j; // Actualizar el tamaño del arreglo
@@ -56,33 +69,39 @@ void Linea::eliminarEstacion(Estacion* estacion) {
     }
 }
 
-
+// Método para obtener una estación por su nombre
 Estacion* Linea::obtenerEstacion(const string& nombreEstacion) {
     for (int i = 0; i < tamano; ++i) {
-        if (estaciones[i] != nullptr && estaciones[i]->nombre == nombreEstacion) {
+        if (estaciones[i] != nullptr && estaciones[i]->getNombre() == nombreEstacion) {
             return estaciones[i];
         }
     }
     return nullptr; // Si no se encontró la estación, devuelve nullptr
 }
 
-
-
-
-
-
-
-// Implementación del método getNumeroEstaciones
+// Método para obtener el número de estaciones en la línea
 int Linea::getNumeroEstaciones() {
     return tamano;
 }
 
-// Implementación del método toString
-std::string Linea::toString() {
-    std::string result = "Linea: " + nombre + "\n";
-    result += "Estaciones:\n";
+// Método para obtener una representación de cadena de la línea
+string Linea::toString() const {
+    string infoLinea = "Nombre de la línea: " + nombre + "\n";
+    infoLinea += "Capacidad máxima: " + to_string(capacidadMaxima) + "\n";
+    infoLinea += "Estaciones en la línea:\n";
     for (int i = 0; i < tamano; ++i) {
-        result += estaciones[i]->nombre + "\n";
+        infoLinea += " - " + estaciones[i]->getNombre() + "\n";
     }
-    return result;
+    return infoLinea;
 }
+
+// Método para obtener el nombre de la línea
+string Linea::getNombre() const {
+    return nombre;
+}
+
+
+
+
+
+

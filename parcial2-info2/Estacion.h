@@ -3,14 +3,18 @@
 
 #include <string>
 
+using namespace std;
+
 // Clase Estacion
 class Estacion {
 public:
-    std::string nombre;
+    string nombre;
     // Otros atributos de la estación, como coordenadas, por ejemplo
 
-    Estacion(std::string nombre);
+    Estacion(string nombre);
     // Otros métodos de la estación
+
+    string getNombre() const;
 };
 
 #endif
