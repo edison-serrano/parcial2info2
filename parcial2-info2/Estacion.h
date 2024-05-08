@@ -5,16 +5,16 @@
 
 using namespace std;
 
-// Clase Estacion
 class Estacion {
-public:
+private:
     string nombre;
-    // Otros atributos de la estación, como coordenadas, por ejemplo
+    bool esTransferencia;
 
-    Estacion(string nombre);
-    // Otros métodos de la estación
-
+public:
+    Estacion(string nombre, bool transferencia = false);
     string getNombre() const;
+    bool esDeTransferencia() const;
+    void setTransferencia(bool transferencia); // Nuevo método para establecer si la estación es de transferencia
 };
 
 #endif

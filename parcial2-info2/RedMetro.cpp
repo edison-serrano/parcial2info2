@@ -150,8 +150,12 @@ void RedMetro::eliminarEstacionDeLinea(const std::string& nombreLinea, const str
     if (linea) {
         Estacion* estacion = linea->obtenerEstacion(nombreEstacion); // Obtener la estación por su nombre
         if (estacion) {
-            linea->eliminarEstacion(estacion); // Eliminar la estación de la línea
-            cout << "Estacion '" << nombreEstacion << "' eliminada de la linea '" << nombreLinea << "'." << endl;
+            if (estacion->esDeTransferencia()) {
+                cout << "No se puede eliminar una estacion de transferencia." << endl;
+            } else {
+                linea->eliminarEstacion(estacion); // Eliminar la estación de la línea
+                cout << "Estacion '" << nombreEstacion << "' eliminada de la linea '" << nombreLinea << "'." << endl;
+            }
         } else {
             cout << "La estacion '" << nombreEstacion << "' no se encontro en la linea '" << nombreLinea << "'." << endl;
         }
@@ -159,6 +163,7 @@ void RedMetro::eliminarEstacionDeLinea(const std::string& nombreLinea, const str
         cout << "La linea '" << nombreLinea << "' no existe." << endl;
     }
 }
+
 
 void RedMetro::verNumeroEstacionesEnLinea(const string& nombreLinea) const {
     Linea* linea = obtenerLineaPorNombre(nombreLinea);

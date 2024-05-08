@@ -39,6 +39,15 @@ void Linea::agregarEstacion(Estacion* estacion, int posicion) {
         return;
     }
 
+    // Preguntar al usuario si la estación es de transferencia
+    char esTransferenciaInput;
+    cout << "¿Es esta una estacion de transferencia? (S/N): ";
+    cin >> esTransferenciaInput;
+    bool esTransferencia = (esTransferenciaInput == 'S' || esTransferenciaInput == 's');
+
+    // Asignar el valor de transferencia a la estación
+    estacion->setTransferencia(esTransferencia);
+
     // Si la posición es mayor que el tamaño actual, agregar la estación al final
     if (posicion >= tamano) {
         estaciones[tamano++] = estacion;
@@ -56,6 +65,10 @@ void Linea::agregarEstacion(Estacion* estacion, int posicion) {
 
 // Método para eliminar una estación de la línea
 void Linea::eliminarEstacion(Estacion* estacion) {
+    if (estacion->esDeTransferencia()) {
+        cout << "No se puede eliminar una estacion de transferencia." << endl;
+        return;
+    }
     bool encontrada = false; // Variable para indicar si se encontró la estación
     for (int i = 0; i < tamano; ++i) {
         if (estaciones[i] == estacion) {
@@ -80,6 +93,7 @@ void Linea::eliminarEstacion(Estacion* estacion) {
         cout << "Error: La estacion no se encontro en la linea." << endl;
     }
 }
+
 
 // Método para obtener una estación por su nombre
 Estacion* Linea::obtenerEstacion(const string& nombreEstacion) {
