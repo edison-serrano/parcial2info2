@@ -28,22 +28,47 @@ Linea::~Linea() {
 
 // Método para agregar una estación a la línea
 void Linea::agregarEstacion(Estacion* estacion, int posicion) {
-    if (posicion < 0 || posicion > tamano || tamano == capacidadMaxima) {
-        cout << "Error: No se puede agregar la estacion en la posicion especificada o la linea esta llena." << endl;
+    if (posicion < 0 || posicion >= capacidadMaxima) {
+        cout << "Error: La posicion especificada esta fuera de los limites de la linea." << endl;
         return;
     }
 
-    // Hacer espacio para la nueva estación
-    for (int i = tamano; i > posicion; --i) {
-        estaciones[i] = estaciones[i - 1];
+    // Asegurarse de que haya suficiente capacidad para agregar la estación
+    if (tamano >= capacidadMaxima) {
+        cout << "Error: La linea esta llena, no se puede agregar mas estaciones." << endl;
+        return;
     }
-    // Agregar la nueva estación
-    estaciones[posicion] = estacion;
-    tamano++;
+
+    // Preguntar al usuario si la estación es de transferencia
+    char esTransferenciaInput;
+    cout << "¿Es esta una estacion de transferencia? (S/N): ";
+    cin >> esTransferenciaInput;
+    bool esTransferencia = (esTransferenciaInput == 'S' || esTransferenciaInput == 's');
+
+    // Asignar el valor de transferencia a la estación
+    estacion->setTransferencia(esTransferencia);
+
+    // Si la posición es mayor que el tamaño actual, agregar la estación al final
+    if (posicion >= tamano) {
+        estaciones[tamano++] = estacion;
+    } else {
+        // Hacer espacio para la nueva estación
+        for (int i = tamano; i > posicion; --i) {
+            estaciones[i] = estaciones[i - 1];
+        }
+        // Agregar la nueva estación en la posición especificada
+        estaciones[posicion] = estacion;
+        tamano++;
+    }
 }
+
 
 // Método para eliminar una estación de la línea
 void Linea::eliminarEstacion(Estacion* estacion) {
+    if (estacion->esDeTransferencia()) {
+        cout << "No se puede eliminar una estacion de transferencia." << endl;
+        return;
+    }
     bool encontrada = false; // Variable para indicar si se encontró la estación
     for (int i = 0; i < tamano; ++i) {
         if (estaciones[i] == estacion) {
@@ -68,6 +93,7 @@ void Linea::eliminarEstacion(Estacion* estacion) {
         cout << "Error: La estacion no se encontro en la linea." << endl;
     }
 }
+
 
 // Método para obtener una estación por su nombre
 Estacion* Linea::obtenerEstacion(const string& nombreEstacion) {
@@ -99,9 +125,3 @@ string Linea::toString() const {
 string Linea::getNombre() const {
     return nombre;
 }
-
-
-
-
-
-
