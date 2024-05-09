@@ -6,23 +6,23 @@
 using namespace std;
 
 void menuPrincipal() {
-    cout << "\n=== Menú Principal ===" << endl;
+    cout << "\n=== Menu Principal ===" << endl;
     cout << "1. Red Metro" << endl;
     cout << "2. Linea" << endl;
     cout << "3. Estacion" << endl;
     cout << "4. Salir" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opcion: ";
 }
 
 void menuRedMetro(RedMetro& redMetro) {
     int opcion;
     while (true) {
-        cout << "\n=== Menú Red Metro ===" << endl;
+        cout << "\n=== Menu Red Metro ===" << endl;
         cout << "1. Ver Red Metro" << endl;
         cout << "2. Crear Red Metro" << endl;
         cout << "3. Eliminar Red Metro" << endl;
-        cout << "4. Volver al Menú Principal" << endl;
-        cout << "Seleccione una opción: ";
+        cout << "4. Volver al Menu Principal" << endl;
+        cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
@@ -49,7 +49,7 @@ void menuRedMetro(RedMetro& redMetro) {
             // Volver al menú principal
             return;
         default:
-            cout << "Opción inválida. Intente de nuevo." << endl;
+            cout << "Opcion invalida. Intente de nuevo." << endl;
         }
     }
 }
@@ -59,44 +59,44 @@ void menuLinea(RedMetro& redMetro) {
     bool salir = false;
 
     while (!salir) {
-        cout << "\n=== Menú Línea ===" << endl;
-        cout << "1. Crear Línea" << endl;
-        cout << "2. Agregar Estación a Línea" << endl;
-        cout << "3. Eliminar Estación de Línea" << endl;
-        cout << "4. Ver Número de Estaciones en Línea" << endl;
-        cout << "5. Mostrar Línea" << endl;
-        cout << "6. Volver al Menú Principal" << endl;
-        cout << "Seleccione una opción: ";
+        cout << "\n=== Menu Linea ===" << endl;
+        cout << "1. Crear Linea" << endl;
+        cout << "2. Agregar Estacion a Linea" << endl;
+        cout << "3. Eliminar Estacion de Linea" << endl;
+        cout << "4. Ver Numero de Estaciones en Linea" << endl;
+        cout << "5. Mostrar Linea" << endl;
+        cout << "6. Volver al Menu Principal" << endl;
+        cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
         case 1: {
             string nombreLinea;
-            cout << "Ingrese el nombre de la nueva línea: ";
+            cout << "Ingrese el nombre de la nueva linea: ";
             cin >> nombreLinea;
-            redMetro.crearLinea(nombreLinea); // Ajuste aquí para pasar solo el nombre de la línea
-            cout << "Línea creada exitosamente." << endl;
+            redMetro.crearLinea(nombreLinea); // Ajuste aqui para pasar solo el nombre de la línea
+            cout << "Linea creada exitosamente." << endl;
             break;
         }
         case 2: {
             string nombreLinea, nombreEstacion;
             int posicion;
-            cout << "Ingrese el nombre de la línea a la que desea agregar la estación: ";
+            cout << "Ingrese el nombre de la linea a la que desea agregar la estacion: ";
             cin >> nombreLinea;
-            cout << "Ingrese el nombre de la estación a agregar: ";
+            cout << "Ingrese el nombre de la estacion a agregar: ";
             cin >> nombreEstacion;
-            cout << "Ingrese la posición donde desea agregar la estación: ";
+            cout << "Ingrese la posicion donde desea agregar la estacion: ";
             cin >> posicion;
 
             // Crear una nueva instancia de Estacion
             Estacion* nuevaEstacion = new Estacion(nombreEstacion);
 
-            // Verificar si la estación se creó correctamente
+            // Verificar si la estación se creo correctamente
             if (nuevaEstacion != nullptr) {
                 // Llamar a la función para agregar la estación a la línea
                 redMetro.agregarEstacionALinea(nombreLinea, nuevaEstacion, posicion);
             } else {
-                cout << "Error al crear la estación." << endl;
+                cout << "Error al crear la estacion." << endl;
                 // Si hubo un error al crear la estación, asegúrate de liberar la memoria
                 delete nuevaEstacion;
             }
@@ -105,33 +105,33 @@ void menuLinea(RedMetro& redMetro) {
 
         case 3: {
             string nombreLinea, nombreEstacion;
-            cout << "Ingrese el nombre de la línea de la que desea eliminar la estación: ";
+            cout << "Ingrese el nombre de la linea de la que desea eliminar la estacion: ";
             cin >> nombreLinea;
-            cout << "Ingrese el nombre de la estación a eliminar: ";
+            cout << "Ingrese el nombre de la estacion a eliminar: ";
             cin >> nombreEstacion;
             redMetro.eliminarEstacionDeLinea(nombreLinea, nombreEstacion);
             break;
         }
         case 4: {
             string nombreLinea;
-            cout << "Ingrese el nombre de la línea: ";
+            cout << "Ingrese el nombre de la linea: ";
             cin >> nombreLinea;
             redMetro.verNumeroEstacionesEnLinea(nombreLinea);
             break;
         }
         case 5: {
             string nombreLinea;
-            cout << "Ingrese el nombre de la línea que desea ver: ";
+            cout << "Ingrese el nombre de la linea que desea ver: ";
             cin >> nombreLinea;
             redMetro.mostrarLinea(nombreLinea);
             break;
         }
         case 6:
-            cout << "Saliendo del Menú Línea." << endl;
+            cout << "Saliendo del Menu Linea." << endl;
             salir = true;
             break;
         default:
-            cout << "Opción inválida. Intente de nuevo." << endl;
+            cout << "Opcion invalida. Intente de nuevo." << endl;
             break;
         }
     }
@@ -141,13 +141,13 @@ void menuLinea(RedMetro& redMetro) {
 
 
 void menuEstacion() {
-    cout << "\n=== Menú Estacion ===" << endl;
+    cout << "\n=== Menu Estacion ===" << endl;
     cout << "1. Ver Estaciones Disponibles" << endl;
     cout << "2. Crear Estacion" << endl;
     cout << "3. Editar Estacion" << endl;
     cout << "4. Eliminar Estacion" << endl;
-    cout << "5. Volver al Menú Principal" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "5. Volver al Menu Principal" << endl;
+    cout << "Seleccione una opcion: ";
 }
 
 int main() {
@@ -174,7 +174,7 @@ int main() {
             salir = true;
             break;
         default:
-            cout << "Opción inválida. Intente de nuevo." << endl;
+            cout << "Opcion invalida. Intente de nuevo." << endl;
         }
     }
 
@@ -184,4 +184,3 @@ int main() {
 
     return 0;
 }
-
