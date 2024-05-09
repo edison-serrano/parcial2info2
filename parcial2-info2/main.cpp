@@ -71,13 +71,16 @@ void menuLinea(RedMetro& redMetro) {
 
         switch (opcion) {
         case 1: {
-            string nombreLinea;
+            string nombreLinea, nombreRed;
             cout << "Ingrese el nombre de la nueva linea: ";
             cin >> nombreLinea;
-            redMetro.crearLinea(nombreLinea); // Ajuste aqui para pasar solo el nombre de la línea
+            cout << "Ingrese el nombre de la red de metro a la que pertenece la linea: ";
+            cin >> nombreRed;
+            redMetro.crearLinea(nombreLinea, nombreRed);
             cout << "Linea creada exitosamente." << endl;
             break;
         }
+
         case 2: {
             string nombreLinea, nombreEstacion;
             int posicion;
@@ -140,15 +143,54 @@ void menuLinea(RedMetro& redMetro) {
 
 
 
-void menuEstacion() {
-    cout << "\n=== Menu Estacion ===" << endl;
-    cout << "1. Ver Estaciones Disponibles" << endl;
-    cout << "2. Crear Estacion" << endl;
-    cout << "3. Editar Estacion" << endl;
-    cout << "4. Eliminar Estacion" << endl;
-    cout << "5. Volver al Menu Principal" << endl;
-    cout << "Seleccione una opcion: ";
+void menuEstacion(RedMetro& redMetro) {
+    int opcion;
+    bool salir = false;
+
+    while (!salir) {
+        cout << "\n=== Menu Estacion ===" << endl;
+        cout << "1. Ver Estaciones Disponibles" << endl;
+        cout << "2. Tiempos de Estacion" << endl;
+        cout << "3. Volver al Menu Principal" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+        {
+            string nombreLinea;
+            cout << "Ingrese el nombre de la linea que desea ver: ";
+            cin >> nombreLinea;
+            redMetro.mostrarLinea(nombreLinea);
+            break;
+        }
+            break;
+
+        case 2:{
+            std::string nombreLinea, nombreEstacion;
+            int tiempoEstacionAnterior, tiempoEstacionSiguiente;
+            cout << "Ingrese el nombre de la línea: ";
+            cin >> nombreLinea;
+            cout << "Ingrese el nombre de la estación: ";
+            cin >> nombreEstacion;
+            cout << "Ingrese el tiempo en segundos de la estación anterior: ";
+            cin >> tiempoEstacionAnterior;
+            cout << "Ingrese el tiempo en segundos de la estación siguiente: ";
+            cin >> tiempoEstacionSiguiente;
+
+            redMetro.editarTiempoEstaciones(nombreLinea, nombreEstacion, tiempoEstacionAnterior, tiempoEstacionSiguiente);
+            break;
+        }
+        case 3:
+            // Salir del menú estación
+            salir = true;
+            break;
+        default:
+            cout << "Opcion invalida. Intente de nuevo." << endl;
+        }
+    }
 }
+
 
 int main() {
     int opcion;
@@ -168,7 +210,7 @@ int main() {
             menuLinea(redMetro);
             break;
         case 3:
-            menuEstacion();
+            menuEstacion(redMetro);
             break;
         case 4:
             salir = true;

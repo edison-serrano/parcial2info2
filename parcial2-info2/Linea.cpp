@@ -11,7 +11,7 @@ Linea::Linea() : nombre("Nombre por defecto"), capacidadMaxima(10), estaciones(n
 }
 
 // Constructor con parámetros
-Linea::Linea(const string& nombre, int capacidadMaxima) : nombre(nombre), capacidadMaxima(capacidadMaxima), estaciones(nullptr), capacidad(0), tamano(0) {
+Linea::Linea(const string& nombre, int capacidadMaxima, const string& nombreRed) : nombre(nombre), capacidadMaxima(capacidadMaxima), nombreRed(nombreRed), estaciones(nullptr), capacidad(0), tamano(0) {
     // Inicializar el arreglo de estaciones con capacidad inicial
     estaciones = new Estacion*[capacidadMaxima];
 }
@@ -124,4 +124,37 @@ string Linea::toString() const {
 // Método para obtener el nombre de la línea
 string Linea::getNombre() const {
     return nombre;
+}
+
+
+
+void Linea::editarTiempoEstaciones(const string& nombreEstacion, int tiempoEstacionAnterior, int tiempoEstacionSiguiente) {
+    Estacion* estacion = obtenerEstacion(nombreEstacion);
+    if (estacion) {
+        estacion->setTiempoEstacionAnterior(tiempoEstacionAnterior);
+        estacion->setTiempoEstacionSiguiente(tiempoEstacionSiguiente);
+    } else {
+        cout << "La estacion especificada no existe en esta linea." << endl;
+    }
+}
+
+void Linea::mostrarEstacionesConTiempos() const {
+    cout << "Estaciones en la línea '" << nombre << "':" << endl;
+    cout << "--------------------------------------" << endl;
+
+    // Iterar sobre todas las estaciones en la línea
+    for (int i = 0; i < tamano; ++i) {
+        // Mostrar el nombre de la estación
+        cout << i + 1 << ". " << estaciones[i]->getNombre() << endl;
+
+        // Mostrar el tiempo con la estación anterior, excepto para la primera estación
+        if (i > 0) {
+            cout << "   Tiempo con la estación anterior: " << estaciones[i]->getTiempoEstacionAnterior() << " segundos" << endl;
+        }
+
+        // Mostrar el tiempo con la estación siguiente, excepto para la última estación
+        if (i < tamano - 1) {
+            cout << "   Tiempo con la estación siguiente: " << estaciones[i]->getTiempoEstacionSiguiente() << " segundos" << endl;
+        }
+    }
 }

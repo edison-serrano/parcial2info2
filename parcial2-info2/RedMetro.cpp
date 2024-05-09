@@ -14,7 +14,7 @@ RedMetro::RedMetro(const string& nombre) : redes(nullptr), numRedes(0), capacida
     // Llenar el arreglo de líneas con objetos Linea inicializados
     for (int i = 0; i < capacidadLineas; ++i) {
         // Inicializar cada objeto Linea con el constructor proporcionado
-        lineas[i] = Linea("Nombre de la linea", 10); // Reemplaza "Nombre de la línea" con el nombre deseado y 10 con la capacidad máxima deseada
+        lineas[i] = Linea("Nombre de la línea", 10, nombre); // Reemplaza "Nombre de la línea" con el nombre deseado y 10 con la capacidad máxima deseada
     }
 }
 
@@ -89,7 +89,7 @@ void RedMetro::eliminarRedMetro(const string& nombreRed) {
 }
 
 // Implementación del método crearLinea
-void RedMetro::crearLinea(const string& nombreLinea) {
+void RedMetro::crearLinea(const string& nombreLinea, const string& nombreRed) {
     if (numLineas == capacidadLineas) {
         // Si el arreglo está lleno, ampliamos su capacidad
         capacidadLineas = (capacidadLineas == 0) ? 1 : capacidadLineas * 2;
@@ -102,10 +102,11 @@ void RedMetro::crearLinea(const string& nombreLinea) {
         lineas = nuevoArreglo;
     }
     // Creamos la nueva línea
-    lineas[numLineas] = Linea(nombreLinea, 10); // Reemplaza 10 con la capacidad máxima deseada
+    lineas[numLineas] = Linea(nombreLinea, 10, nombreRed); // Reemplaza 10 con la capacidad máxima deseada
     numLineas++;
-    cout << "Se ha creado la linea '" << nombreLinea << "'." << endl;
+    cout << "Se ha creado la linea '" << nombreLinea << "' en la red '" << nombreRed << "'." << endl;
 }
+
 
 
 // Obtener una línea por su nombre
@@ -175,16 +176,26 @@ void RedMetro::verNumeroEstacionesEnLinea(const string& nombreLinea) const {
 }
 
 
-void RedMetro::mostrarLinea(const string& nombreLinea) const {
+void RedMetro::mostrarLinea(const std::string& nombreLinea) const {
     // Buscar la línea por su nombre
     Linea* linea = obtenerLineaPorNombre(nombreLinea);
 
     // Verificar si la línea existe
     if (linea) {
-        // Mostrar la información de la línea
-        cout << "Informacion de la linea '" << nombreLinea << "':" << endl;
-        cout << linea->toString() << endl;
+        // Mostrar las estaciones de la línea con los tiempos
+        cout << "Estaciones en la línea '" << nombreLinea << "':" << endl;
+        linea->mostrarEstacionesConTiempos();
     } else {
-        cout << "La linea '" << nombreLinea << "' no existe." << endl;
+        cout << "La línea '" << nombreLinea << "' no existe." << endl;
+    }
+}
+
+
+void RedMetro::editarTiempoEstaciones(const string& nombreLinea, const string& nombreEstacion, int tiempoEstacionAnterior, int tiempoEstacionSiguiente) {
+    Linea* linea = obtenerLineaPorNombre(nombreLinea);
+    if (linea) {
+        linea->editarTiempoEstaciones(nombreEstacion, tiempoEstacionAnterior, tiempoEstacionSiguiente);
+    } else {
+        cout << "La linea especificada no existe." << endl;
     }
 }
