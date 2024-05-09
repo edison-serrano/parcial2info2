@@ -175,16 +175,26 @@ void RedMetro::verNumeroEstacionesEnLinea(const string& nombreLinea) const {
 }
 
 
-void RedMetro::mostrarLinea(const string& nombreLinea) const {
+void RedMetro::mostrarLinea(const std::string& nombreLinea) const {
     // Buscar la línea por su nombre
     Linea* linea = obtenerLineaPorNombre(nombreLinea);
 
     // Verificar si la línea existe
     if (linea) {
-        // Mostrar la información de la línea
-        cout << "Informacion de la linea '" << nombreLinea << "':" << endl;
-        cout << linea->toString() << endl;
+        // Mostrar las estaciones de la línea con los tiempos
+        cout << "Estaciones en la línea '" << nombreLinea << "':" << endl;
+        linea->mostrarEstacionesConTiempos();
     } else {
-        cout << "La linea '" << nombreLinea << "' no existe." << endl;
+        cout << "La línea '" << nombreLinea << "' no existe." << endl;
+    }
+}
+
+
+void RedMetro::editarTiempoEstaciones(const string& nombreLinea, const string& nombreEstacion, int tiempoEstacionAnterior, int tiempoEstacionSiguiente) {
+    Linea* linea = obtenerLineaPorNombre(nombreLinea);
+    if (linea) {
+        linea->editarTiempoEstaciones(nombreEstacion, tiempoEstacionAnterior, tiempoEstacionSiguiente);
+    } else {
+        cout << "La linea especificada no existe." << endl;
     }
 }
